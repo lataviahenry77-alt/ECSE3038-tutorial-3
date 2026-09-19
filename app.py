@@ -28,3 +28,7 @@ def average_temp(devices):
 @app.get("/devices")
 async def every_devices():
     return readings
+
+@app.get("/devices/hottest")
+async def hottest_devices():
+    return hottest(readings)
