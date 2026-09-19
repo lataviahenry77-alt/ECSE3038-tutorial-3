@@ -32,3 +32,11 @@ async def every_devices():
 @app.get("/devices/hottest")
 async def hottest_devices():
     return hottest(readings)
+
+@app.get("/devices/online")
+async def online_devices():
+    result = []
+    for device in readings:
+        if device["online"]:
+            result.append(device)
+    return result
