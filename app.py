@@ -8,8 +8,7 @@ readings = [
     {"name": "attic",      "room": "attic",   "temp": 31.9, "online": True},
     {"name": "fridge",     "room": "kitchen", "temp": 4.2,  "online": False},
     {"name": "patio",      "room": "outside", "temp": 29.8, "online": True},
-]
-
+]    
 
 def hottest(devices):
     hot = devices[0]
@@ -40,3 +39,11 @@ async def online_devices():
         if device["online"]:
             result.append(device)
     return result
+
+@app.get("/devices/{name}")
+async def name_devices(name):
+    for device in readings:
+        if device["name"] == name:
+            return device
+    raise HTTPException(status_code=404, detail=f"No device called {name}")
+
