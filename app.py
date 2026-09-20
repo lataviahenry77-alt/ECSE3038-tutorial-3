@@ -48,4 +48,9 @@ async def name_devices(name):
    
 @app.get("/stats")
 async def get_stats():
-    return {"average_temperature": round(average_temp(readings), 2)}
+ return {"average_temperature": round(average_temp(readings), 2)}
+
+@app.post("/devices", status_code=201)
+async def create_device(device: dict):
+    readings.append(device)
+    return device
