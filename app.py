@@ -45,6 +45,7 @@ async def name_devices(name):
     for device in readings:
         if device["name"] == name:
             return device
+            raise HTTPException(status_code=404, detail=f"No device called {name}")
    
 @app.get("/stats")
 async def get_stats():
@@ -54,3 +55,17 @@ async def get_stats():
 async def create_device(device: dict):
     readings.append(device)
     return device
+
+
+@app.get("/rooms/{room}/devices")
+async def get_room_devices(room: str):
+    devices = []
+
+    for device in readings:
+        if device["room"] == room:
+            devices.append(device)
+
+    if not devices:
+        raise HTTPException(status_code=404, detail=f"No room called {room}")
+
+    return devices
