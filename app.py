@@ -45,5 +45,7 @@ async def name_devices(name):
     for device in readings:
         if device["name"] == name:
             return device
-    raise HTTPException(status_code=404, detail=f"No device called {name}")
-
+   
+@app.get("/stats")
+async def get_stats():
+    return {"average_temperature": round(average_temp(readings), 2)}
